@@ -9,7 +9,7 @@
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.translateText = translateText;
 const openai_1 = __nccwpck_require__(2583);
-async function translateText(text, targetLanguage, model, token) {
+async function translateText(text, targetLanguage, model, token, customInstructions) {
     const client = new openai_1.OpenAI({
         baseURL: "https://models.inference.ai.azure.com",
         apiKey: token,
@@ -20,6 +20,9 @@ async function translateText(text, targetLanguage, model, token) {
     - Preserve the meaning, tone, formatting and style of the original text
     - Detect the source language automatically
     - Return only the translation, no explanations or notes
+    ${customInstructions
+        ? `\nAdditional instructions:\n${customInstructions}`
+        : ""}
 
     You will receive the text to translate in the user message.`;
     try {
@@ -93,6 +96,7 @@ async function run() {
         const token = core.getInput("token", { required: true });
         const model = core.getInput("model", { required: true });
         const targetLanguage = core.getInput("target-language", { required: true });
+        const customInstructions = core.getInput("custom-instructions");
         let text;
         if (textFile) {
             if (!fs.existsSync(textFile)) {
@@ -108,7 +112,7 @@ async function run() {
         }
         // Translate text
         console.log(`Using ${model} AI model to translate to ${targetLanguage}`);
-        const translatedText = await (0, ai_1.translateText)(text, targetLanguage, model, token);
+        const translatedText = await (0, ai_1.translateText)(text, targetLanguage, model, token, customInstructions);
         // Set output and log response
         core.setOutput("translated-text", translatedText);
         core.startGroup("Translation Result");

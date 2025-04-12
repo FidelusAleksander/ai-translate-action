@@ -9,6 +9,7 @@ async function run() {
     const token = core.getInput("token", { required: true });
     const model = core.getInput("model", { required: true });
     const targetLanguage = core.getInput("target-language", { required: true });
+    const customInstructions = core.getInput("custom-instructions");
 
     let text: string;
     if (textFile) {
@@ -29,6 +30,7 @@ async function run() {
       targetLanguage,
       model,
       token,
+      customInstructions,
     );
 
     // Set output and log response

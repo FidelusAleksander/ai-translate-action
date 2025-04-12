@@ -52,6 +52,36 @@ describe("translateText", () => {
     });
   });
 
+  it("should include custom instructions in system prompt when provided", async () => {
+    const mockTranslation = "¡Hola, mundo!";
+    const customInstructions = "Use formal language";
+    mockCreate.mockResolvedValueOnce({
+      choices: [{ message: { content: mockTranslation } }],
+    });
+
+    await translateText(
+      mockText,
+      mockTargetLanguage,
+      mockModel,
+      mockToken,
+      customInstructions,
+    );
+
+    expect(mockCreate).toHaveBeenCalledWith({
+      model: mockModel,
+      messages: [
+        {
+          role: "system",
+          content: expect.stringContaining(customInstructions),
+        },
+        {
+          role: "user",
+          content: mockText,
+        },
+      ],
+    });
+  });
+
   it("should throw an error when no translation is generated", async () => {
     mockCreate.mockResolvedValueOnce({
       choices: [{ message: { content: null } }],

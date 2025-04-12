@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.translateText = translateText;
 const openai_1 = require("openai");
-async function translateText(text, targetLanguage, model, token) {
+async function translateText(text, targetLanguage, model, token, customInstructions) {
     const client = new openai_1.OpenAI({
         baseURL: "https://models.inference.ai.azure.com",
         apiKey: token,
@@ -13,6 +13,9 @@ async function translateText(text, targetLanguage, model, token) {
     - Preserve the meaning, tone, formatting and style of the original text
     - Detect the source language automatically
     - Return only the translation, no explanations or notes
+    ${customInstructions
+        ? `\nAdditional instructions:\n${customInstructions}`
+        : ""}
 
     You will receive the text to translate in the user message.`;
     try {

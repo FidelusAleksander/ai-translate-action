@@ -52,7 +52,8 @@ permissions:
 | `text-file` | Path to a file containing the text to translate | No* | - |
 | `target-language` | The language to translate the text into | Yes | - |
 | `token` | Personal access token | No | `${{ github.token }}` |
-| `model` | The AI model to use. See [available models](https://github.com/marketplace?type=models) | No | `gpt-4` |
+| `model` | The AI model to use. See [available models](https://github.com/marketplace?type=models) | No | `gpt-4o` |
+| `custom-instructions` | Optional additional instructions to customize translation behavior (e.g., "Don't translate code blocks" or "Keep technical terms in English") | No | - |
 
 \* Either `text` or `text-file` must be provided
 
