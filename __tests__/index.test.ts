@@ -11,44 +11,49 @@ const mockFs = {
   readFileSync: jest.fn(),
 };
 
-const mockGenerateAIResponse = jest.fn();
+const mockTranslateText = jest.fn();
 
 jest.mock("@actions/core", () => mockCore);
 jest.mock("fs", () => mockFs);
 jest.mock("../src/ai", () => ({
-  generateAIResponse: mockGenerateAIResponse,
+  translateText: mockTranslateText,
 }));
 
 describe("GitHub Action", () => {
   const mockToken = "test-token";
   const mockModel = "test-model";
-  const mockPrompt = "test prompt";
-  const mockResponse = "test response";
+  const mockText = "Hello, world!";
+  const mockTranslation = "¡Hola, mundo!";
+  const mockTargetLanguage = "Spanish";
 
   beforeEach(() => {
     jest.resetAllMocks();
-    mockGenerateAIResponse.mockResolvedValue(mockResponse);
+    mockTranslateText.mockResolvedValue(mockTranslation);
     mockCore.getInput.mockImplementation((name: string) => {
       switch (name) {
         case "token":
           return mockToken;
         case "model":
           return mockModel;
+        case "target-language":
+          return mockTargetLanguage;
         default:
           return "";
       }
     });
   });
 
-  it("should work with prompt input", async () => {
+  it("should work with text input", async () => {
     mockCore.getInput.mockImplementation((name: string) => {
       switch (name) {
-        case "prompt":
-          return mockPrompt;
+        case "text":
+          return mockText;
         case "token":
           return mockToken;
         case "model":
           return mockModel;
+        case "target-language":
+          return mockTargetLanguage;
         default:
           return "";
       }
@@ -56,28 +61,31 @@ describe("GitHub Action", () => {
 
     await import("../src/index");
 
-    expect(mockGenerateAIResponse).toHaveBeenCalledWith(
-      mockPrompt,
+    expect(mockTranslateText).toHaveBeenCalledWith(
+      mockText,
+      mockTargetLanguage,
       mockModel,
-      mockToken,
+      mockToken
     );
-    expect(mockCore.setOutput).toHaveBeenCalledWith("text", mockResponse);
+    expect(mockCore.setOutput).toHaveBeenCalledWith("translated-text", mockTranslation);
   });
 
-  it("should work with prompt-file input", async () => {
-    const promptFilePath = "test-prompt.txt";
-    const fileContent = "prompt from file";
+  it("should work with text-file input", async () => {
+    const textFilePath = "test-text.txt";
+    const fileContent = "Hello from file";
 
     mockFs.existsSync.mockReturnValue(true);
     mockFs.readFileSync.mockReturnValue(fileContent);
     mockCore.getInput.mockImplementation((name: string) => {
       switch (name) {
-        case "prompt-file":
-          return promptFilePath;
+        case "text-file":
+          return textFilePath;
         case "token":
           return mockToken;
         case "model":
           return mockModel;
+        case "target-language":
+          return mockTargetLanguage;
         default:
           return "";
       }
@@ -85,28 +93,31 @@ describe("GitHub Action", () => {
 
     await import("../src/index");
 
-    expect(mockFs.existsSync).toHaveBeenCalledWith(promptFilePath);
-    expect(mockFs.readFileSync).toHaveBeenCalledWith(promptFilePath, "utf8");
-    expect(mockGenerateAIResponse).toHaveBeenCalledWith(
+    expect(mockFs.existsSync).toHaveBeenCalledWith(textFilePath);
+    expect(mockFs.readFileSync).toHaveBeenCalledWith(textFilePath, "utf8");
+    expect(mockTranslateText).toHaveBeenCalledWith(
       fileContent,
+      mockTargetLanguage,
       mockModel,
-      mockToken,
+      mockToken
     );
-    expect(mockCore.setOutput).toHaveBeenCalledWith("text", mockResponse);
+    expect(mockCore.setOutput).toHaveBeenCalledWith("translated-text", mockTranslation);
   });
 
-  it("should throw error when prompt file doesn't exist", async () => {
-    const promptFilePath = "non-existent.txt";
+  it("should throw error when text file doesn't exist", async () => {
+    const textFilePath = "non-existent.txt";
 
     mockFs.existsSync.mockReturnValue(false);
     mockCore.getInput.mockImplementation((name: string) => {
       switch (name) {
-        case "prompt-file":
-          return promptFilePath;
+        case "text-file":
+          return textFilePath;
         case "token":
           return mockToken;
         case "model":
           return mockModel;
+        case "target-language":
+          return mockTargetLanguage;
         default:
           return "";
       }
@@ -115,15 +126,15 @@ describe("GitHub Action", () => {
     await import("../src/index");
 
     expect(mockCore.setFailed).toHaveBeenCalledWith(
-      `Prompt file not found: ${promptFilePath}`,
+      `Text file not found: ${textFilePath}`,
     );
   });
 
-  it("should throw error when neither prompt nor prompt-file is provided", async () => {
+  it("should throw error when neither text nor text-file is provided", async () => {
     await import("../src/index");
 
     expect(mockCore.setFailed).toHaveBeenCalledWith(
-      "Either 'prompt' or 'prompt-file' input must be provided",
+      "Either 'text' or 'text-file' input must be provided",
     );
   });
 

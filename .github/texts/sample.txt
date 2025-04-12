@@ -1,0 +1,1 @@
+Welcome to our project! This is a sample text that will be used to test the translation functionality. The text will be translated from English to French in our workflow tests.

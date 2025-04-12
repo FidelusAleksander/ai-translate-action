@@ -1,36 +1,42 @@
 import * as core from "@actions/core";
 import * as fs from "fs";
-import { generateAIResponse } from "./ai";
+import { translateText } from "./ai";
 
 async function run() {
   try {
-    const promptFile = core.getInput("prompt-file");
-    const promptText = core.getInput("prompt");
+    const textFile = core.getInput("text-file");
+    const textContent = core.getInput("text");
     const token = core.getInput("token", { required: true });
     const model = core.getInput("model", { required: true });
+    const targetLanguage = core.getInput("target-language", { required: true });
 
-    let prompt: string;
-    if (promptFile) {
-      if (!fs.existsSync(promptFile)) {
-        throw new Error(`Prompt file not found: ${promptFile}`);
+    let text: string;
+    if (textFile) {
+      if (!fs.existsSync(textFile)) {
+        throw new Error(`Text file not found: ${textFile}`);
       }
-      prompt = fs.readFileSync(promptFile, "utf8");
-    } else if (promptText) {
-      prompt = promptText;
+      text = fs.readFileSync(textFile, "utf8");
+    } else if (textContent) {
+      text = textContent;
     } else {
       throw new Error(
-        "Either 'prompt' or 'prompt-file' input must be provided",
+        "Either 'text' or 'text-file' input must be provided",
       );
     }
 
-    // Generate AI response
-    console.log(`Prompting ${model} AI model`);
-    const response = await generateAIResponse(prompt, model, token);
+    // Translate text
+    console.log(`Using ${model} AI model to translate to ${targetLanguage}`);
+    const translatedText = await translateText(
+      text,
+      targetLanguage,
+      model,
+      token
+    );
 
     // Set output and log response
-    core.setOutput("text", response);
-    core.startGroup("AI Response");
-    console.log(response);
+    core.setOutput("translated-text", translatedText);
+    core.startGroup("Translation Result");
+    console.log(translatedText);
     core.endGroup();
   } catch (error) {
     core.setFailed(error instanceof Error ? error.message : String(error));

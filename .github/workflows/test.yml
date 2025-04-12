@@ -11,26 +11,27 @@ permissions:
   models: read
 
 jobs:
-  test-action-prompt:
-    name: Test Action with Prompt
+  test-action-text:
+    name: Test Action with Text
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - name: Test action
         id: test
         uses: ./
         with:
-          prompt: "What is the meaning of life?"
+          text: "Hello, world!"
+          target-language: "Spanish"
 
-  test-action-prompt-file:
-    name: Test Action with Prompt File
+  test-action-text-file:
+    name: Test Action with Text File
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Test action
         uses: ./
         with:
-          prompt-file: ".github/prompts/ai.md"
+          text-file: ".github/texts/sample.txt"
+          target-language: "Polish"
 
   test-typescript:
     name: TypeScript Unit Tests
