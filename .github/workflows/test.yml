@@ -1,0 +1,47 @@
+name: Run Tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  models: read
+
+jobs:
+  test-action-text:
+    name: Test Action with Text
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test action
+        id: test
+        uses: ./
+        with:
+          text: "Hello, world!"
+          target-language: "Spanish"
+
+  test-action-text-file:
+    name: Test Action with Text File
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test action
+        uses: ./
+        with:
+          text-file: ".github/texts/sample.txt"
+          target-language: "Polish"
+
+  test-typescript:
+    name: TypeScript Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - run: npm test

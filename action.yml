@@ -1,0 +1,31 @@
+name: "AI Translate"
+description: "Translate text using AI"
+author: "FidelusAleksander"
+inputs:
+  token:
+    description: >
+      Personal access token, can be passed as secrets.GITHUB_TOKEN
+    default: ${{ github.token }}
+  text:
+    description: >
+      Text to translate
+    required: false
+  text-file:
+    description: >
+      Path to a file containing the text to translate
+    required: false
+  target-language:
+    description: >
+      The language to translate the text into
+    required: true
+  model:
+    description: >
+      The AI model to use for translation
+    default: "gpt-4o"
+outputs:
+  translated-text:
+    description: >
+      The translated text
+runs:
+  using: "node16"
+  main: "dist/index.js"
