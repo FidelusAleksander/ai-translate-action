@@ -66,6 +66,41 @@ describe("GitHub Action", () => {
       mockTargetLanguage,
       mockModel,
       mockToken,
+      "",
+    );
+    expect(mockCore.setOutput).toHaveBeenCalledWith(
+      "translated-text",
+      mockTranslation,
+    );
+  });
+
+  it("should work with text input and custom instructions", async () => {
+    const mockCustomInstructions = "Use formal language";
+    mockCore.getInput.mockImplementation((name: string) => {
+      switch (name) {
+        case "text":
+          return mockText;
+        case "token":
+          return mockToken;
+        case "model":
+          return mockModel;
+        case "target-language":
+          return mockTargetLanguage;
+        case "custom-instructions":
+          return mockCustomInstructions;
+        default:
+          return "";
+      }
+    });
+
+    await import("../src/index");
+
+    expect(mockTranslateText).toHaveBeenCalledWith(
+      mockText,
+      mockTargetLanguage,
+      mockModel,
+      mockToken,
+      mockCustomInstructions,
     );
     expect(mockCore.setOutput).toHaveBeenCalledWith(
       "translated-text",
@@ -103,6 +138,7 @@ describe("GitHub Action", () => {
       mockTargetLanguage,
       mockModel,
       mockToken,
+      "",
     );
     expect(mockCore.setOutput).toHaveBeenCalledWith(
       "translated-text",

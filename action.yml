@@ -22,6 +22,12 @@ inputs:
     description: >
       The AI model to use for translation
     default: "gpt-4o"
+  custom-instructions:
+    description: >
+      Optional additional instructions to customize the translation behavior.
+      For example: "Don't translate code blocks" or "Keep technical terms in English".
+      Use this to control how specific parts of the text should be handled during translation.
+    required: false
 outputs:
   translated-text:
     description: >

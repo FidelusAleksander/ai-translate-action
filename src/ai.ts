@@ -5,6 +5,7 @@ export async function translateText(
   targetLanguage: string,
   model: string,
   token: string,
+  customInstructions?: string,
 ): Promise<string> {
   const client = new OpenAI({
     baseURL: "https://models.inference.ai.azure.com",
@@ -17,6 +18,11 @@ export async function translateText(
     - Preserve the meaning, tone, formatting and style of the original text
     - Detect the source language automatically
     - Return only the translation, no explanations or notes
+    ${
+      customInstructions
+        ? `\nAdditional instructions:\n${customInstructions}`
+        : ""
+    }
 
     You will receive the text to translate in the user message.`;
 
