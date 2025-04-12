@@ -22,10 +22,6 @@ jspm_packages/
 .env.test
 .env.production
 
-# Build output
-dist/
-lib/
-out/
 
 # Logs
 logs

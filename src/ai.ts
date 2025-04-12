@@ -25,7 +25,7 @@ export async function translateText(
       model: model,
       messages: [
         { role: "system", content: systemPrompt },
-        { role: "user", content: text }
+        { role: "user", content: text },
       ],
     });
 

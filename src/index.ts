@@ -19,9 +19,7 @@ async function run() {
     } else if (textContent) {
       text = textContent;
     } else {
-      throw new Error(
-        "Either 'text' or 'text-file' input must be provided",
-      );
+      throw new Error("Either 'text' or 'text-file' input must be provided");
     }
 
     // Translate text
@@ -30,7 +28,7 @@ async function run() {
       text,
       targetLanguage,
       model,
-      token
+      token,
     );
 
     // Set output and log response

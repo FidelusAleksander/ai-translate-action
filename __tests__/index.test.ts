@@ -65,9 +65,12 @@ describe("GitHub Action", () => {
       mockText,
       mockTargetLanguage,
       mockModel,
-      mockToken
+      mockToken,
     );
-    expect(mockCore.setOutput).toHaveBeenCalledWith("translated-text", mockTranslation);
+    expect(mockCore.setOutput).toHaveBeenCalledWith(
+      "translated-text",
+      mockTranslation,
+    );
   });
 
   it("should work with text-file input", async () => {
@@ -99,9 +102,12 @@ describe("GitHub Action", () => {
       fileContent,
       mockTargetLanguage,
       mockModel,
-      mockToken
+      mockToken,
     );
-    expect(mockCore.setOutput).toHaveBeenCalledWith("translated-text", mockTranslation);
+    expect(mockCore.setOutput).toHaveBeenCalledWith(
+      "translated-text",
+      mockTranslation,
+    );
   });
 
   it("should throw error when text file doesn't exist", async () => {
