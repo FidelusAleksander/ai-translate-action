@@ -1,0 +1,27 @@
+name: "Ask AI"
+description: "Ask AI about ... well, anything!"
+author: "FidelusAleksander"
+inputs:
+  token:
+    description: >
+      Personal access token, can be passed as secrets.GITHUB_TOKEN
+    default: ${{ github.token }}
+  prompt:
+    description: >
+      What do you want to ask?
+    required: false
+  prompt-file:
+    description: >
+      Path to a file containing the prompt
+    required: false
+  model:
+    description: >
+      The AI model to use for generating the response
+    default: "gpt-4o"
+outputs:
+  text:
+    description: >
+      The answer to your question
+runs:
+  using: "node16"
+  main: "dist/index.js"

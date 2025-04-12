@@ -1,0 +1,43 @@
+name: AI Issue Responder
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  models: read
+
+jobs:
+  respond-to-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ask AI
+        id: ask-ai
+        uses: ./
+        with:
+          model: gpt-4o
+          prompt: |
+            Respond to this GitHub issue. Your response should be ready to post as a comment. Don't respond with anything other than the comment text.
+
+            AUTHOR: ${{ github.event.issue.user.login }}
+            TITLE: ${{ github.event.issue.title }}
+            DESCRIPTION: ${{ github.event.issue.body }}
+
+            Follow these guidelines:
+            1. Thank the user for opening the issue
+            2. Determine the issue type:
+                - If it's a bug report, ask for any missing information (steps to reproduce, expected vs actual behavior, environment details)
+                - If it's a feature request, acknowledge the idea's value and ask for use cases if none were provided
+            3. Sign of as "AI Assistant"
+
+      - name: Comment on issue
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ## 👋 Hello there!
+
+            ${{ steps.ask-ai.outputs.text }}
+
+            _This is an automated response from our AI assistant. A human maintainer will review your issue soon._
