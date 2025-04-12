@@ -6,7 +6,7 @@ jest.mock("openai");
 
 describe("translateText", () => {
   const mockToken = "test-token";
-  const mockModel = "gpt-4";
+  const mockModel = "gpt-4o";
   const mockText = "Hello, world!";
   const mockTargetLanguage = "Spanish";
 
@@ -40,13 +40,13 @@ describe("translateText", () => {
     expect(mockCreate).toHaveBeenCalledWith({
       model: mockModel,
       messages: [
-        { 
-          role: "system", 
+        {
+          role: "system",
           content: expect.stringContaining(mockTargetLanguage)
         },
-        { 
-          role: "user", 
-          content: mockText 
+        {
+          role: "user",
+          content: mockText
         }
       ],
     });

@@ -1,42 +1,44 @@
-# Ask AI :robot:
+# AI Translate :globe_with_meridians:
 
-[![Run Tests](https://github.com/FidelusAleksander/ask-ai/actions/workflows/test.yml/badge.svg)](https://github.com/FidelusAleksander/ask-ai/actions/workflows/test.yml)
+[![Run Tests](https://github.com/FidelusAleksander/ai-translate/actions/workflows/test.yml/badge.svg)](https://github.com/FidelusAleksander/ai-translate/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/FidelusAleksander/ask-ai)](https://github.com/FidelusAleksander/ask-ai/releases)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/FidelusAleksander/ai-translate)](https://github.com/FidelusAleksander/ai-translate/releases)
 
-A GitHub Action that lets you ask AI questions directly in your workflows.
+A GitHub Action that provides AI-powered text translation directly in your workflows.
 
-- [Ask AI :robot:](#ask-ai-robot)
+- [AI Translate :globe_with_meridians:](#ai-translate-globe_with_meridians)
   - [Basic Usage 🚀](#basic-usage-)
-    - [Provide prompt directly](#provide-prompt-directly)
-    - [Load a prompt from a file](#load-a-prompt-from-a-file)
+    - [Translate text directly](#translate-text-directly)
+    - [Translate from a file](#translate-from-a-file)
   - [Permissions 🔒](#permissions-)
   - [Inputs ⚙️](#inputs-️)
   - [Outputs 📤](#outputs-)
   - [Cool examples 🎮](#cool-examples-)
-    - [Respond to Issues](#respond-to-issues)
+    - [Translate Documentation](#translate-documentation)
 
 ## Basic Usage 🚀
 
-### Provide prompt directly
+### Translate text directly
 
 ```yaml
-- uses: FidelusAleksander/ask-ai@v1
+- uses: FidelusAleksander/ai-translate@v1
   with:
-    prompt: "What is the meaning of life?"
+    text: "Hello, world!"
+    target-language: "Spanish"
 ```
 
-### Load a prompt from a file
+### Translate from a file
 
 ```yaml
-- uses: FidelusAleksander/ask-ai@v1
+- uses: FidelusAleksander/ai-translate@v1
   with:
-    prompt-file: .github/prompts/my-prompt.md
+    text-file: .github/texts/content.md
+    target-language: "French"
 ```
 
 ## Permissions 🔒
 
-This actions requires at minimum the following permissions set.
+This action requires at minimum the following permissions set.
 
 ```
 permissions:
@@ -47,68 +49,71 @@ permissions:
 
 | Input | Description | Required | Default |
 |-------|-------------|----------|---------|
-| `prompt` | The text prompt to send to the AI | No* | - |
-| `prompt-file` | Path to a file containing the prompt | No* | - |
+| `text` | The text to translate | No* | - |
+| `text-file` | Path to a file containing the text to translate | No* | - |
+| `target-language` | The language to translate the text into | Yes | - |
 | `token` | Personal access token | No | `${{ github.token }}` |
-| `model` | The AI model to use. See [available models](https://github.com/marketplace?type=models) | No | `gpt-4o` |
+| `model` | The AI model to use. See [available models](https://github.com/marketplace?type=models) | No | `gpt-4` |
 
-\* Either `prompt` or `prompt-file` must be provided
+\* Either `text` or `text-file` must be provided
 
 ## Outputs 📤
 
 | Output | Description |
 |--------|-------------|
-| `text` | The AI's response to your prompt |
+| `translated-text` | The translated text |
 
 ## Cool examples 🎮
 
 Have you come up with a clever use of this action? Open a PR to showcase it here for the world to see!
 
-### Respond to Issues
+### Translate Documentation
 
-Respond to opened issues for extra information
+Automatically translate your documentation when changes are made:
 
 ```yaml
-name: AI Issue Responder
+name: Translate Documentation
 on:
-  issues:
-    types: [opened]
+  push:
+    paths:
+      - 'docs/en/**'
+    branches:
+      - main
 
 permissions:
-  issues: write
+  contents: write
   models: read
 
 jobs:
-  respond-to-issue:
+  translate-docs:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: [Spanish, French, German]
     steps:
       - uses: actions/checkout@v4
-      - name: Ask AI
-        id: ask-ai
-        uses: ./
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
         with:
-          model: gpt-4o
-          prompt: |
-            Respond to this GitHub issue. Your response should be ready to post as a comment. Don't respond with anything other than the comment text.
+          files: docs/en/**
 
-            AUTHOR: ${{ github.event.issue.user.login }}
-            TITLE: ${{ github.event.issue.title }}
-            DESCRIPTION: ${{ github.event.issue.body }}
-
-            Follow these guidelines:
-            1. Thank the user for opening the issue
-            2. Determine the issue type:
-                - If it's a bug report, ask for any missing information (steps to reproduce, expected vs actual behavior, environment details)
-                - If it's a feature request, acknowledge the idea's value and ask for use cases if none were provided
-            3. Sign of as "AI Assistant"
-
-      - name: Comment on issue
-        uses: peter-evans/create-or-update-comment@v3
+      - name: Translate Documentation
+        uses: FidelusAleksander/ai-translate@v1
+        id: translate
         with:
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            ## 👋 Hello there!
+          text-file: ${{ steps.changed-files.outputs.all_changed_files }}
+          target-language: ${{ matrix.language }}
 
-            ${{ steps.ask-ai.outputs.text }}
-
-            _This is an automated response from our AI assistant. A human maintainer will review your issue soon._
+      - name: Update translated documentation
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: 'docs: update ${{ matrix.language }} translation'
+          body: 'Automated translation update for ${{ matrix.language }} documentation'
+          branch: translate-docs-${{ matrix.language }}
+          base: main
+          commit-message: 'docs: update ${{ matrix.language }} translation'
+          add-paths: |
+            docs/${{ matrix.language }}/**
+```
