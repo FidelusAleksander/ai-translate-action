@@ -9,7 +9,7 @@ A GitHub Action that provides AI-powered text translation directly in your workf
 - [AI Translate :globe\_with\_meridians:](#ai-translate-globe_with_meridians)
   - [Basic Usage 🚀](#basic-usage-)
     - [Translate text directly](#translate-text-directly)
-    - [Translate from a file](#translate-from-a-file)
+    - [Translate a text file](#translate-a-text-file)
   - [Permissions 🔒](#permissions-)
   - [Inputs ⚙️](#inputs-️)
   - [Outputs 📤](#outputs-)
@@ -26,12 +26,12 @@ A GitHub Action that provides AI-powered text translation directly in your workf
     target-language: "Spanish"
 ```
 
-### Translate from a file
+### Translate a text file
 
 ```yaml
 - uses: FidelusAleksander/ai-translate@v1
   with:
-    text-file: .github/texts/content.md
+    text-file: README.md
     target-language: "French"
 ```
 
