@@ -107,7 +107,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Translate README
-        uses: ./
+        uses: FidelusAleksander/ai-translate@v1
         id: translate
         with:
           text-file: "README.md"
@@ -150,7 +150,6 @@ jobs:
           delete-branch: true
           labels: |
             documentation
-            skip-release-notes
 ```
 
 This workflow automatically translates the README into Polish, Spanish, and Chinese whenever changes are made to the English version. It creates a pull request with the updated translations, making it easy to review the changes before merging.
