@@ -17,6 +17,7 @@ A GitHub Action that provides AI-powered text translation directly in your workf
   - [Outputs 📤](#outputs-)
   - [Cool examples 🎮](#cool-examples-)
     - [Auto-translate README to multiple languages](#auto-translate-readme-to-multiple-languages)
+    - [Automatically format PR titles to conventional commits](#automatically-format-pr-titles-to-conventional-commits)
 
 ## Basic Usage 🚀
 
@@ -153,3 +154,33 @@ jobs:
 ```
 
 This workflow automatically translates the README into Polish, Spanish, and Chinese whenever changes are made to the English version. It creates a pull request with the updated translations, making it easy to review the changes before merging.
+
+### Automatically format PR titles to conventional commits
+
+This action can help enforce conventional commit styling on PR titles.
+
+Ideas for follow up step:
+- comment on the PR with the suggested PR title
+- update the PR title
+
+```yaml
+name: Update PR Title
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions:
+  models: read
+
+jobs:
+  update-pr-title:
+    - name: Prompt
+      uses: FidelusAleksander/ai-translate@v1
+      with:
+        prompt: |
+          Modify this PR title to match conventional commit styling:
+
+          ${{ github.event.pull_request.title }}
+
+```
