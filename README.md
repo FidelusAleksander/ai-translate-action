@@ -175,12 +175,14 @@ permissions:
 
 jobs:
   update-pr-title:
-    - name: Prompt
-      uses: FidelusAleksander/ai-translate@v1
-      with:
-        prompt: |
-          Modify this PR title to match conventional commit styling:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prompt
+        uses: FidelusAleksander/ai-translate@v1
+        with:
+          prompt: |
+            Modify this PR title to match conventional commit styling:
 
-          ${{ github.event.pull_request.title }}
+            ${{ github.event.pull_request.title }}
 
 ```
