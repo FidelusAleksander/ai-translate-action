@@ -1,0 +1,75 @@
+name: Translate README
+
+on:
+  push:
+    paths:
+      - "README.md"
+
+permissions:
+  contents: write
+  pull-requests: write
+  models: read
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: ["polish", "spanish", "chinese"]
+        include:
+          - language: "polish"
+            file: "README.pl.md"
+          - language: "spanish"
+            file: "README.es.md"
+          - language: "chinese"
+            file: "README.zh.md"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Translate README
+        uses: ./
+        id: translate
+        with:
+          text-file: "README.md"
+          target-language: ${{ matrix.language }}
+          custom-instructions: "Keep technical terms in English. Don't translate code blocks"
+
+      - name: Save translation
+        run: |
+          mkdir -p docs
+          echo "$TRANSLATED_TEXT" | tee docs/${{ matrix.file }}
+        env:
+          TRANSLATED_TEXT: ${{ steps.translate.outputs.translated-text }}
+
+      - name: Upload translation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.file }}
+          path: docs/${{ matrix.file }}
+
+  create-pr:
+    needs: translate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: docs
+          merge-multiple: true
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "docs: update translations of README"
+          title: "docs: update translations of README"
+          body: |
+            This PR updates all translations of the README:
+
+            Changes were automatically generated using the [ai-translate](https://github.com/FidelusAleksander/ai-translate) action.
+          branch: docs/update-readme-translations
+          add-paths: "docs/README*"
+          delete-branch: true
+          labels: |
+            documentation

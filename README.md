@@ -4,6 +4,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/FidelusAleksander/ai-translate)](https://github.com/FidelusAleksander/ai-translate/releases)
 
+[![English](https://img.shields.io/badge/English-README.md-blue)](https://github.com/FidelusAleksander/ai-translate/blob/main/README.md) [![Polish](https://img.shields.io/badge/Polish-docs/README.pl.md-red)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.pl.md) [![Spanish](https://img.shields.io/badge/Spanish-docs/README.es.md-yellow)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.es.md) [![Chinese](https://img.shields.io/badge/Chinese-docs/README.zh.md-green)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.zh.md)
+
 A GitHub Action that provides AI-powered text translation directly in your workflows.
 
 - [AI Translate :globe\_with\_meridians:](#ai-translate-globe_with_meridians)
@@ -14,6 +16,7 @@ A GitHub Action that provides AI-powered text translation directly in your workf
   - [Inputs ⚙️](#inputs-️)
   - [Outputs 📤](#outputs-)
   - [Cool examples 🎮](#cool-examples-)
+    - [Auto-translate README to multiple languages](#auto-translate-readme-to-multiple-languages)
 
 ## Basic Usage 🚀
 
@@ -39,7 +42,7 @@ A GitHub Action that provides AI-powered text translation directly in your workf
 
 This action requires at minimum the following permissions set.
 
-```
+```yaml
 permissions:
   models: read
 ```
@@ -66,3 +69,86 @@ permissions:
 ## Cool examples 🎮
 
 Have you come up with a clever use of this action? Open a PR to showcase it here for the world to see!
+
+### Auto-translate README to multiple languages
+
+This action can be used to automatically translate your README into multiple languages whenever changes are made. Here's how this repository keeps its documentation in sync:
+
+```yaml
+name: Translate README
+
+on:
+  push:
+    paths:
+      - "README.md"
+
+permissions:
+  contents: write
+  pull-requests: write
+  models: read
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: ["polish", "spanish", "chinese"]
+        include:
+          - language: "polish"
+            file: "README.pl.md"
+          - language: "spanish"
+            file: "README.es.md"
+          - language: "chinese"
+            file: "README.zh.md"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Translate README
+        uses: ./
+        id: translate
+        with:
+          text-file: "README.md"
+          target-language: ${{ matrix.language }}
+          custom-instructions: "Keep technical terms in English. Don't translate code blocks"
+
+      - name: Save translation
+        run: |
+          mkdir -p docs
+          echo "$TRANSLATED_TEXT" | tee docs/${{ matrix.file }}
+        env:
+          TRANSLATED_TEXT: ${{ steps.translate.outputs.translated-text }}
+
+      - name: Upload translation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.file }}
+          path: docs/${{ matrix.file }}
+
+  create-pr:
+    needs: translate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: docs
+          merge-multiple: true
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "docs: update translations of README"
+          title: "docs: update translations of README"
+          body: |
+            This PR updates all translations of the README:
+
+            Changes were automatically generated using the [ai-translate](https://github.com/FidelusAleksander/ai-translate) action.
+          branch: docs/update-readme-translations
+          add-paths: "docs/README*"
+          delete-branch: true
+          labels: |
+            documentation
+            skip-release-notes
+```
+
+This workflow automatically translates the README into Polish, Spanish, and Chinese whenever changes are made to the English version. It creates a pull request with the updated translations, making it easy to review the changes before merging.
