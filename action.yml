@@ -1,6 +1,9 @@
 name: "AI Translate"
 description: "Translate text using AI"
 author: "FidelusAleksander"
+branding:
+  icon: globe
+  color: green
 inputs:
   token:
     description: >
