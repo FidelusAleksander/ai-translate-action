@@ -75,3 +75,4 @@ jobs:
           delete-branch: true
           labels: |
             documentation
+            skip-release-notes
