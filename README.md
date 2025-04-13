@@ -79,6 +79,8 @@ name: Translate README
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "README.md"
 
