@@ -12,4 +12,4 @@ maintenance:
 
 enhancement:
   - changed-files:
-      - any-glob-to-any-file: ["src/**/*", "dist/**/*"]
+      - any-glob-to-any-file: ["src/**/*", "dist/**/*", "action.yml"]
