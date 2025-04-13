@@ -6,12 +6,12 @@
 
 [![English](https://img.shields.io/badge/English-README.md-blue)](https://github.com/FidelusAleksander/ai-translate/blob/main/README.md) [![Polish](https://img.shields.io/badge/Polish-docs/README.pl.md-red)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.pl.md) [![Spanish](https://img.shields.io/badge/Spanish-docs/README.es.md-yellow)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.es.md) [![Chinese](https://img.shields.io/badge/Chinese-docs/README.zh.md-green)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.zh.md)
 
-GitHub Action umożliwiający tłumaczenie tekstu z wykorzystaniem technologii AI bezpośrednio w Twoich workflow.
+Github Action, który zapewnia tłumaczenie tekstu napędzane AI bezpośrednio w Twoich workflow.
 
 - [AI Translate :globe\_with\_meridians:](#ai-translate-globe_with_meridians)
   - [Podstawowe użycie 🚀](#podstawowe-użycie-)
-    - [Tłumaczenie tekstu bezpośrednio](#tłumaczenie-tekstu-bezpośrednio)
-    - [Tłumaczenie pliku tekstowego](#tłumaczenie-pliku-tekstowego)
+    - [Tłumacz tekst bezpośrednio](#tłumacz-tekst-bezpośrednio)
+    - [Tłumacz plik tekstowy](#tłumacz-plik-tekstowy)
   - [Uprawnienia 🔒](#uprawnienia-)
   - [Dane wejściowe ⚙️](#dane-wejściowe-️)
   - [Dane wyjściowe 📤](#dane-wyjściowe-)
@@ -20,7 +20,7 @@ GitHub Action umożliwiający tłumaczenie tekstu z wykorzystaniem technologii A
 
 ## Podstawowe użycie 🚀
 
-### Tłumaczenie tekstu bezpośrednio
+### Tłumacz tekst bezpośrednio
 
 ```yaml
 - uses: FidelusAleksander/ai-translate@v1
@@ -29,7 +29,7 @@ GitHub Action umożliwiający tłumaczenie tekstu z wykorzystaniem technologii A
     target-language: "Spanish"
 ```
 
-### Tłumaczenie pliku tekstowego
+### Tłumacz plik tekstowy
 
 ```yaml
 - uses: FidelusAleksander/ai-translate@v1
@@ -40,7 +40,7 @@ GitHub Action umożliwiający tłumaczenie tekstu z wykorzystaniem technologii A
 
 ## Uprawnienia 🔒
 
-Ta akcja wymaga minimalnie następujących uprawnień.
+Ta akcja wymaga co najmniej następujących ustawień uprawnień.
 
 ```yaml
 permissions:
@@ -49,30 +49,30 @@ permissions:
 
 ## Dane wejściowe ⚙️
 
-| Wartość | Opis | Wymagane | Domyślne |
-|---------|-------|----------|----------|
+| Dane wejściowe | Opis | Wymagane | Domyślne |
+|----------------|-------|----------|----------|
 | `text` | Tekst do przetłumaczenia | Nie* | - |
 | `text-file` | Ścieżka do pliku zawierającego tekst do przetłumaczenia | Nie* | - |
-| `target-language` | Język, na który ma zostać przetłumaczony tekst | Tak | - |
+| `target-language` | Język docelowy tłumaczenia | Tak | - |
 | `token` | Osobisty token dostępu | Nie | `${{ github.token }}` |
 | `model` | Model AI do użycia. Zobacz [dostępne modele](https://github.com/marketplace?type=models) | Nie | `gpt-4o` |
-| `custom-instructions` | Opcjonalne dodatkowe instrukcje dostosowujące działanie tłumaczenia (np. "Nie tłumacz bloków kodu" lub "Zachowaj angielskie terminy techniczne") | Nie | - |
+| `custom-instructions` | Opcjonalne dodatkowe instrukcje do dostosowania zachowania tłumaczenia (np. "Nie tłumacz bloków kodu" lub "Zachowaj terminy techniczne w języku angielskim") | Nie | - |
 
-\* Należy podać albo `text`, albo `text-file`
+\* Należy podać `text` lub `text-file`
 
 ## Dane wyjściowe 📤
 
-| Wartość | Opis |
-|---------|------|
+| Dane wyjściowe | Opis |
+|----------------|------|
 | `translated-text` | Przetłumaczony tekst |
 
 ## Ciekawe przykłady 🎮
 
-Czy opracowałeś sprytne zastosowanie dla tej akcji? Otwórz PR, aby zaprezentować je tutaj całemu światu!
+Wymyśliłeś sprytne użycie tej akcji? Otwórz PR, aby zaprezentować je tutaj światu!
 
 ### Automatyczne tłumaczenie README na wiele języków
 
-Ta akcja może być używana do automatycznego tłumaczenia README na wiele języków za każdym razem, gdy wprowadzone zostaną zmiany. Tak repozytorium synchronizuje swoją dokumentację:
+Ta akcja może być używana do automatycznego tłumaczenia README na wiele języków, kiedykolwiek zostaną dokonane zmiany. Oto jak to repozytorium utrzymuje swoją dokumentację w synchronizacji:
 
 ```yaml
 name: Translate README
@@ -107,7 +107,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Translate README
-        uses: ./
+        uses: FidelusAleksander/ai-translate@v1
         id: translate
         with:
           text-file: "README.md"
@@ -150,7 +150,6 @@ jobs:
           delete-branch: true
           labels: |
             documentation
-            skip-release-notes
 ```
 
-Ten workflow automatycznie tłumaczy README na język polski, hiszpański i chiński za każdym razem, gdy wprowadzane są zmiany do angielskiej wersji. Tworzy pull request z zaktualizowanymi tłumaczeniami, co ułatwia przeglądanie zmian przed ich scaleniem.
+Ten workflow automatycznie tłumaczy README na polski, hiszpański i chiński ilekroć zmiany zostaną wprowadzone do angielskiej wersji. Tworzy pull request z zaktualizowanymi tłumaczeniami, co umożliwia łatwą weryfikację zmian przed scaleniem.
