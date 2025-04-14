@@ -94,10 +94,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        language: ["polish", "spanish", "chinese"]
+        language: ["spanish", "chinese"]
         include:
-          - language: "polish"
-            file: "README.pl.md"
           - language: "spanish"
             file: "README.es.md"
           - language: "chinese"
