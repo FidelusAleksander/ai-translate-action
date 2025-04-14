@@ -6,19 +6,19 @@
 
 [![English](https://img.shields.io/badge/English-README.md-blue)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/README.md) [![Polish](https://img.shields.io/badge/Polish-docs/README.pl.md-red)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/docs/README.pl.md) [![Spanish](https://img.shields.io/badge/Spanish-docs/README.es.md-yellow)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/docs/README.es.md) [![Chinese](https://img.shields.io/badge/Chinese-docs/README.zh.md-green)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/docs/README.zh.md)
 
-Una GitHub Action que proporciona traducción de texto impulsada por IA directamente en tus flujos de trabajo.
+Una acción de GitHub que proporciona traducción de texto impulsada por IA directamente en tus flujos de trabajo.
 
 - [AI Translate Action :globe\_with\_meridians:](#ai-translate-action-globe_with_meridians)
-  - [Uso Básico 🚀](#uso-básico-)
+  - [Uso básico 🚀](#uso-básico-)
     - [Traducir texto directamente](#traducir-texto-directamente)
     - [Traducir un archivo de texto](#traducir-un-archivo-de-texto)
   - [Permisos 🔒](#permisos-)
   - [Entradas ⚙️](#entradas-️)
   - [Salidas 📤](#salidas-)
-  - [Ejemplos Geniales 🎮](#ejemplos-geniales-)
-    - [Traducción automática de README a múltiples idiomas](#traducción-automática-de-readme-a-múltiples-idiomas)
+  - [Ejemplos geniales 🎮](#ejemplos-geniales-)
+    - [Traducción automática del README a varios idiomas](#traducción-automática-del-readme-a-varios-idiomas)
 
-## Uso Básico 🚀
+## Uso básico 🚀
 
 ### Traducir texto directamente
 
@@ -40,7 +40,7 @@ Una GitHub Action que proporciona traducción de texto impulsada por IA directam
 
 ## Permisos 🔒
 
-Esta acción requiere al menos los siguientes permisos configurados.
+Esta acción requiere al menos los siguientes permisos establecidos.
 
 ```yaml
 permissions:
@@ -49,13 +49,13 @@ permissions:
 
 ## Entradas ⚙️
 
-| Entrada | Descripción | Requerido | Default |
-|---------|-------------|-----------|---------|
+| Entrada | Descripción | Obligatorio | Predeterminado |
+|---------|-------------|-------------|----------------|
 | `text` | El texto a traducir | No* | - |
 | `text-file` | Ruta a un archivo que contiene el texto a traducir | No* | - |
-| `target-language` | El idioma al que se traducirá el texto | Sí | - |
+| `target-language` | El idioma al que traducir el texto | Sí | - |
 | `token` | Token de acceso personal | No | `${{ github.token }}` |
-| `model` | El modelo de IA a usar. Ver [modelos disponibles](https://github.com/marketplace?type=models) | No | `gpt-4o` |
+| `model` | El modelo de IA a utilizar. Ver [modelos disponibles](https://github.com/marketplace?type=models) | No | `gpt-4o` |
 | `custom-instructions` | Instrucciones adicionales opcionales para personalizar el comportamiento de la traducción (por ejemplo, "No traduzcas bloques de código" o "Mantén los términos técnicos en inglés") | No | - |
 
 \* Se debe proporcionar `text` o `text-file`
@@ -66,13 +66,13 @@ permissions:
 |--------|-------------|
 | `translated-text` | El texto traducido |
 
-## Ejemplos Geniales 🎮
+## Ejemplos geniales 🎮
 
-¿Se te ocurrió un uso ingenioso para esta acción? ¡Abre un PR para mostrarlo aquí al mundo!
+¿Has ideado un uso ingenioso de esta acción? ¡Abre un PR para mostrarlo aquí al mundo!
 
-### Traducción automática de README a múltiples idiomas
+### Traducción automática del README a varios idiomas
 
-Esta acción puede usarse para traducir automáticamente tu README a varios idiomas cada vez que se realicen cambios. Así es como este repositorio mantiene su documentación sincronizada:
+Esta acción se puede usar para traducir automáticamente tu README a varios idiomas cada vez que se realicen cambios. Así es como este repositorio mantiene su documentación sincronizada:
 
 ```yaml
 name: Translate README
@@ -94,10 +94,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        language: ["polish", "spanish", "chinese"]
+        language: ["spanish", "chinese"]
         include:
-          - language: "polish"
-            file: "README.pl.md"
           - language: "spanish"
             file: "README.es.md"
           - language: "chinese"
@@ -152,4 +150,4 @@ jobs:
             documentation
 ```
 
-Este flujo de trabajo traduce automáticamente el README a polaco, español y chino siempre que se realicen cambios en la versión en inglés. Crea un pull request con las traducciones actualizadas, lo que facilita la revisión de los cambios antes de fusionarlos.
+Este flujo de trabajo traduce automáticamente el README a polaco, español y chino cada vez que se realizan cambios en la versión en inglés. Crea una pull request con las traducciones actualizadas, lo que facilita la revisión de los cambios antes de fusionarlos.
