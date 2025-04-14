@@ -1,38 +1,38 @@
-# AI Translate :globe_with_meridians:
+# AI Translate Action :globe_with_meridians:
 
-[![Run Tests](https://github.com/FidelusAleksander/ai-translate/actions/workflows/test.yml/badge.svg)](https://github.com/FidelusAleksander/ai-translate/actions/workflows/test.yml)
+[![Run Tests](https://github.com/FidelusAleksander/ai-translate-action/actions/workflows/test.yml/badge.svg)](https://github.com/FidelusAleksander/ai-translate-action/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/FidelusAleksander/ai-translate)](https://github.com/FidelusAleksander/ai-translate/releases)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/FidelusAleksander/ai-translate-action)](https://github.com/FidelusAleksander/ai-translate-action/releases)
 
-[![English](https://img.shields.io/badge/English-README.md-blue)](https://github.com/FidelusAleksander/ai-translate/blob/main/README.md) [![Polish](https://img.shields.io/badge/Polish-docs/README.pl.md-red)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.pl.md) [![Spanish](https://img.shields.io/badge/Spanish-docs/README.es.md-yellow)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.es.md) [![Chinese](https://img.shields.io/badge/Chinese-docs/README.zh.md-green)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.zh.md)
+[![English](https://img.shields.io/badge/English-README.md-blue)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/README.md) [![Polish](https://img.shields.io/badge/Polish-docs/README.pl.md-red)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/docs/README.pl.md) [![Spanish](https://img.shields.io/badge/Spanish-docs/README.es.md-yellow)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/docs/README.es.md) [![Chinese](https://img.shields.io/badge/Chinese-docs/README.zh.md-green)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/docs/README.zh.md)
 
-Github Action, który zapewnia tłumaczenie tekstu napędzane AI bezpośrednio w Twoich workflow.
+GitHub Action wykorzystujący AI do tłumaczenia tekstów bezpośrednio w ramach Twoich workflow.
 
-- [AI Translate :globe\_with\_meridians:](#ai-translate-globe_with_meridians)
-  - [Podstawowe użycie 🚀](#podstawowe-użycie-)
-    - [Tłumacz tekst bezpośrednio](#tłumacz-tekst-bezpośrednio)
-    - [Tłumacz plik tekstowy](#tłumacz-plik-tekstowy)
+- [AI Translate Action :globe\_with\_meridians:](#ai-translate-action-globe_with_meridians)
+  - [Podstawowe zastosowanie 🚀](#podstawowe-zastosowanie-)
+    - [Bezpośrednie tłumaczenie tekstu](#bezpośrednie-tłumaczenie-tekstu)
+    - [Tłumaczenie pliku tekstowego](#tłumaczenie-pliku-tekstowego)
   - [Uprawnienia 🔒](#uprawnienia-)
   - [Dane wejściowe ⚙️](#dane-wejściowe-️)
   - [Dane wyjściowe 📤](#dane-wyjściowe-)
-  - [Ciekawe przykłady 🎮](#ciekawe-przykłady-)
+  - [Fajne przykłady 🎮](#fajne-przykłady-)
     - [Automatyczne tłumaczenie README na wiele języków](#automatyczne-tłumaczenie-readme-na-wiele-języków)
 
-## Podstawowe użycie 🚀
+## Podstawowe zastosowanie 🚀
 
-### Tłumacz tekst bezpośrednio
+### Bezpośrednie tłumaczenie tekstu
 
 ```yaml
-- uses: FidelusAleksander/ai-translate@v1
+- uses: FidelusAleksander/ai-translate-action@v1
   with:
     text: "Hello, world!"
     target-language: "Spanish"
 ```
 
-### Tłumacz plik tekstowy
+### Tłumaczenie pliku tekstowego
 
 ```yaml
-- uses: FidelusAleksander/ai-translate@v1
+- uses: FidelusAleksander/ai-translate-action@v1
   with:
     text-file: README.md
     target-language: "French"
@@ -40,7 +40,7 @@ Github Action, który zapewnia tłumaczenie tekstu napędzane AI bezpośrednio w
 
 ## Uprawnienia 🔒
 
-Ta akcja wymaga co najmniej następujących ustawień uprawnień.
+Ta akcja wymaga minimalnych uprawnień zgodnie z poniższym ustawieniem.
 
 ```yaml
 permissions:
@@ -49,14 +49,14 @@ permissions:
 
 ## Dane wejściowe ⚙️
 
-| Dane wejściowe | Opis | Wymagane | Domyślne |
-|----------------|-------|----------|----------|
-| `text` | Tekst do przetłumaczenia | Nie* | - |
-| `text-file` | Ścieżka do pliku zawierającego tekst do przetłumaczenia | Nie* | - |
+| Dane wejściowe | Opis | Wymagane | Domyślnie |
+|----------------|------|----------|-----------|
+| `text` | Tekst do tłumaczenia | Nie* | - |
+| `text-file` | Ścieżka do pliku zawierającego tekst do tłumaczenia | Nie* | - |
 | `target-language` | Język docelowy tłumaczenia | Tak | - |
 | `token` | Osobisty token dostępu | Nie | `${{ github.token }}` |
-| `model` | Model AI do użycia. Zobacz [dostępne modele](https://github.com/marketplace?type=models) | Nie | `gpt-4o` |
-| `custom-instructions` | Opcjonalne dodatkowe instrukcje do dostosowania zachowania tłumaczenia (np. "Nie tłumacz bloków kodu" lub "Zachowaj terminy techniczne w języku angielskim") | Nie | - |
+| `model` | Model AI używany do tłumaczenia. Zobacz [dostępne modele](https://github.com/marketplace?type=models) | Nie | `gpt-4o` |
+| `custom-instructions` | Dodatkowe instrukcje personalizujące działanie tłumaczenia (np. "Nie tłumacz fragmentów kodu" lub "Zachowaj angielskie terminy techniczne") | Nie | - |
 
 \* Należy podać `text` lub `text-file`
 
@@ -66,13 +66,13 @@ permissions:
 |----------------|------|
 | `translated-text` | Przetłumaczony tekst |
 
-## Ciekawe przykłady 🎮
+## Fajne przykłady 🎮
 
-Wymyśliłeś sprytne użycie tej akcji? Otwórz PR, aby zaprezentować je tutaj światu!
+Masz ciekawy pomysł na wykorzystanie tej akcji? Otwórz PR i pokaż go światu!
 
 ### Automatyczne tłumaczenie README na wiele języków
 
-Ta akcja może być używana do automatycznego tłumaczenia README na wiele języków, kiedykolwiek zostaną dokonane zmiany. Oto jak to repozytorium utrzymuje swoją dokumentację w synchronizacji:
+Ta akcja pozwala na automatyczne tłumaczenie pliku README na wiele języków, gdy tylko wprowadzone zostaną zmiany. Przykład działania w tym repozytorium poniżej:
 
 ```yaml
 name: Translate README
@@ -107,7 +107,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Translate README
-        uses: FidelusAleksander/ai-translate@v1
+        uses: FidelusAleksander/ai-translate-action@v1
         id: translate
         with:
           text-file: "README.md"
@@ -144,7 +144,7 @@ jobs:
           body: |
             This PR updates all translations of the README:
 
-            Changes were automatically generated using the [ai-translate](https://github.com/FidelusAleksander/ai-translate) action.
+            Changes were automatically generated using the [ai-translate-action](https://github.com/FidelusAleksander/ai-translate-action) action.
           branch: docs/update-readme-translations
           add-paths: "docs/README*"
           delete-branch: true
@@ -152,4 +152,4 @@ jobs:
             documentation
 ```
 
-Ten workflow automatycznie tłumaczy README na polski, hiszpański i chiński ilekroć zmiany zostaną wprowadzone do angielskiej wersji. Tworzy pull request z zaktualizowanymi tłumaczeniami, co umożliwia łatwą weryfikację zmian przed scaleniem.
+Ten workflow automatycznie tłumaczy README na język polski, hiszpański i chiński za każdym razem, gdy w angielskiej wersji zostaną wprowadzone zmiany. Tworzy pull request z aktualizacjami tłumaczeń, umożliwiając łatwe przeglądanie zmian przed scaleniem.
