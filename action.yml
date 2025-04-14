@@ -1,5 +1,5 @@
-name: "AI Translate"
-description: "Translate text using AI"
+name: "AI Translate Action"
+description: "Translate text using AI directly in your GitHub Actions workflow"
 author: "FidelusAleksander"
 branding:
   icon: globe

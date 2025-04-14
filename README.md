@@ -1,14 +1,14 @@
-# AI Translate :globe_with_meridians:
+# AI Translate Action :globe_with_meridians:
 
-[![Run Tests](https://github.com/FidelusAleksander/ai-translate/actions/workflows/test.yml/badge.svg)](https://github.com/FidelusAleksander/ai-translate/actions/workflows/test.yml)
+[![Run Tests](https://github.com/FidelusAleksander/ai-translate-action/actions/workflows/test.yml/badge.svg)](https://github.com/FidelusAleksander/ai-translate-action/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/FidelusAleksander/ai-translate)](https://github.com/FidelusAleksander/ai-translate/releases)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/FidelusAleksander/ai-translate-action)](https://github.com/FidelusAleksander/ai-translate-action/releases)
 
-[![English](https://img.shields.io/badge/English-README.md-blue)](https://github.com/FidelusAleksander/ai-translate/blob/main/README.md) [![Polish](https://img.shields.io/badge/Polish-docs/README.pl.md-red)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.pl.md) [![Spanish](https://img.shields.io/badge/Spanish-docs/README.es.md-yellow)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.es.md) [![Chinese](https://img.shields.io/badge/Chinese-docs/README.zh.md-green)](https://github.com/FidelusAleksander/ai-translate/blob/main/docs/README.zh.md)
+[![English](https://img.shields.io/badge/English-README.md-blue)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/README.md) [![Polish](https://img.shields.io/badge/Polish-docs/README.pl.md-red)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/docs/README.pl.md) [![Spanish](https://img.shields.io/badge/Spanish-docs/README.es.md-yellow)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/docs/README.es.md) [![Chinese](https://img.shields.io/badge/Chinese-docs/README.zh.md-green)](https://github.com/FidelusAleksander/ai-translate-action/blob/main/docs/README.zh.md)
 
 A GitHub Action that provides AI-powered text translation directly in your workflows.
 
-- [AI Translate :globe\_with\_meridians:](#ai-translate-globe_with_meridians)
+- [AI Translate Action :globe\_with\_meridians:](#ai-translate-action-globe_with_meridians)
   - [Basic Usage 🚀](#basic-usage-)
     - [Translate text directly](#translate-text-directly)
     - [Translate a text file](#translate-a-text-file)
@@ -23,7 +23,7 @@ A GitHub Action that provides AI-powered text translation directly in your workf
 ### Translate text directly
 
 ```yaml
-- uses: FidelusAleksander/ai-translate@v1
+- uses: FidelusAleksander/ai-translate-action@v1
   with:
     text: "Hello, world!"
     target-language: "Spanish"
@@ -32,7 +32,7 @@ A GitHub Action that provides AI-powered text translation directly in your workf
 ### Translate a text file
 
 ```yaml
-- uses: FidelusAleksander/ai-translate@v1
+- uses: FidelusAleksander/ai-translate-action@v1
   with:
     text-file: README.md
     target-language: "French"
@@ -107,7 +107,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Translate README
-        uses: FidelusAleksander/ai-translate@v1
+        uses: FidelusAleksander/ai-translate-action@v1
         id: translate
         with:
           text-file: "README.md"
@@ -144,7 +144,7 @@ jobs:
           body: |
             This PR updates all translations of the README:
 
-            Changes were automatically generated using the [ai-translate](https://github.com/FidelusAleksander/ai-translate) action.
+            Changes were automatically generated using the [ai-translate-action](https://github.com/FidelusAleksander/ai-translate-action) action.
           branch: docs/update-readme-translations
           add-paths: "docs/README*"
           delete-branch: true
