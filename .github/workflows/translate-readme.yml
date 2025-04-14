@@ -69,7 +69,7 @@ jobs:
           body: |
             This PR updates all translations of the README:
 
-            Changes were automatically generated using the [ai-translate](https://github.com/FidelusAleksander/ai-translate) action.
+            Changes were automatically generated using the [ai-translate-action](https://github.com/FidelusAleksander/ai-translate-action) action.
           branch: docs/update-readme-translations
           add-paths: "docs/README*"
           delete-branch: true

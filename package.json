@@ -1,6 +1,5 @@
 {
-  "name": "ai-translate",
-  "version": "1.0.0",
+  "name": "ai-translate-action",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
