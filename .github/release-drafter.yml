@@ -9,7 +9,6 @@ categories:
       - "bug"
   - title: "🧰 Maintenance"
     labels:
-      - "dependencies"
       - "maintenance"
   - title: "📚 Documentation"
     labels:
@@ -18,11 +17,11 @@ change-template: "- $TITLE (#$NUMBER)"
 version-resolver:
   major:
     labels:
-      - "major"
+      - "bump-major"
       - "breaking"
   minor:
     labels:
-      - "minor"
+      - "bump-minor"
       - "enhancement"
   default: patch
 template: |
