@@ -150,4 +150,4 @@ jobs:
             documentation
 ```
 
-This workflow automatically translates the README into Spanish, and Chinese whenever changes are made to the English version. It creates a pull request with the updated translations, making it easy to review the changes before merging.
+This workflow automatically translates the README into Spanish and Chinese whenever changes are made to the English version. It creates a pull request with the updated translations, making it easy to review the changes before merging.
