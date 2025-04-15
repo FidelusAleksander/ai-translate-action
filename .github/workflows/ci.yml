@@ -1,4 +1,4 @@
-name: Check Transpiled JavaScript
+name: CI
 
 on:
   pull_request:
@@ -12,6 +12,18 @@ permissions:
   contents: read
 
 jobs:
+  test-typescript:
+    name: TypeScript Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - run: npm test
+
   check-dist:
     name: Check dist/
     runs-on: ubuntu-latest
