@@ -33,6 +33,6 @@
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.0",
-    "openai": "^4.93.0"
+    "openai": "^4.95.1"
   }
 }
