@@ -23,7 +23,7 @@
   "devDependencies": {
     "@github/local-action": "^5.1.0",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.0.15",
+    "@types/node": "^24.1.0",
     "@vercel/ncc": "^0.38.3",
     "jest": "^30.0.5",
     "ts-jest": "^29.4.0",
