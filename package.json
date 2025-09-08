@@ -21,7 +21,7 @@
     ]
   },
   "devDependencies": {
-    "@github/local-action": "^5.1.0",
+    "@github/local-action": "^5.2.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.2.1",
     "@vercel/ncc": "^0.38.3",
