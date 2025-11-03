@@ -45,7 +45,7 @@ jobs:
           TRANSLATED_TEXT: ${{ steps.translate.outputs.translated-text }}
 
       - name: Upload translation artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.file }}
           path: docs/${{ matrix.file }}
@@ -56,7 +56,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           path: docs
           merge-multiple: true
