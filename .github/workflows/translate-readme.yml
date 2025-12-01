@@ -27,7 +27,7 @@ jobs:
             file: "README.zh.md"
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Translate README
         uses: ./
@@ -54,7 +54,7 @@ jobs:
     needs: translate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/download-artifact@v6
         with:
