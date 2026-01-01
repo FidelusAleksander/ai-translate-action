@@ -27,7 +27,7 @@ jobs:
             file: "README.zh.md"
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Translate README
         uses: ./
@@ -45,7 +45,7 @@ jobs:
           TRANSLATED_TEXT: ${{ steps.translate.outputs.translated-text }}
 
       - name: Upload translation artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.file }}
           path: docs/${{ matrix.file }}
@@ -54,15 +54,15 @@ jobs:
     needs: translate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           path: docs
           merge-multiple: true
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "docs: update translations of README"
           title: "docs: update translations of README"
